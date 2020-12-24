@@ -1,0 +1,102 @@
+//dalivery man report
+
+SELECT delivery_man.d_name,orders.delivery_man,orders.orderID,orders.date,orders.feedback,orders.status,orders.fee FROM orders JOIN  delivery_man on delivery_man.dID=orders.delivery_man  WHERE( delivery_man='13' AND date BETWEEN '2020-11-06
+' AND '2020-11-06
+')
+
+//
+SELECT SUM(fee) AS total FROM orders WHERE delivery_man=13 AND `status`= 'delivered'
+
+//
+SELECT SUM(fee) AS total_fees, delivery_man.d_name,orders.delivery_man,orders.orderID,orders.date,orders.feedback,orders.status,orders.fee FROM orders JOIN  delivery_man on delivery_man.dID=orders.delivery_man  WHERE( delivery_man='13' AND date BETWEEN '2020-10-01' AND '2020-11-03')
+////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SELECT Name, (`basic`*`hosue-rent`)/100 AS `hosue-rent`,(`basic`*`madical_alounce`)/100 AS `madical_alounce`,(`basic`+(`basic`*`hosue-rent`)/100+(`basic`*`madical_alounce`)/100) AS total FROM `employee`
+
+
+SELECT * FROM `employee` WHERE dpt_id=1 and basic>7000
+
+SELECT sum(basic) as totalBasic FROM `employee`
+
+SELECT * FROM `employee` limit 5,7
+
+SELECT SUM(basic) as total FROM `employee` LIMIT 10
+
+SELECT SUM(basic) as total FROM `employee` WHERE dpt_id=1
+
+SELECT * FROM `employee` WHERE `Name` LIKE 'f%n'
+
+SELECT * FROM `employee` WHERE `Name` like 'F___%'
+
+SELECT name,`basic` FROM `employee` WHERE basic IN (5000,7000,6000)
+
+SELECT sum(basic) FROM (SELECT basic FROM employee LIMIT 2)r
+
+DELIMITER $$
+CREATE PROCEDURE `get_dpt_data`(d_id int(11))
+SELECT * FROM department where id=d_id$$
+DELIMITER ;
+
+
+
+
+DELIMITER $$
+CREATE  FUNCTION `total_sal`() RETURNS decimal(10,2)
+BEGIN
+DECLARE total decimal(10,2);
+SELECT SUM(basic) INTO total FROM employee;
+RETURN total;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE `calculator`(`d_id` INT)
+BEGIN 
+	DECLARE total decimal(10,2);
+    DECLARE n int;
+    DECLARE av decimal(10,2);
+    
+    SELECT COUNT(*) INTO n FROM employee WHERE dpt_id=d_id;
+    SELECT sum(basic) INTO total FROM employee WHERE dpt_id=dpt_id;
+    SET av=total/n;
+    SELECT av as average,total,n;
+END$$
+DELIMITER ;
+
+
+BEGIN
+DECLARE total decimal(10,2);
+DECLARE n int;
+DECLARE av decimal (10,2);
+DECLARE lg varchar(4);
+
+SELECT COUNT(*) INTO n FROM mark WHERE empID=e_id;
+SELECT SUM(marks) INTO total FROM mark WHERE empID=e_id;
+ SET av=total/n;
+ IF av>33 AND av<40 THEN 
+ SET lg="D";
+ ELSEIF av>40 AND av<50 THEN
+ SET lg="c";
+ ELSEIF av>50 AND av <80 THEN 
+ SET lg="B";
+ ELSE
+ SET lg="F";
+END IF;
+SELECT lg;
+END

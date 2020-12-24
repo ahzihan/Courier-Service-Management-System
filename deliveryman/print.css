@@ -1,0 +1,6 @@
+
+    @media only print {
+        footer,header,.sidebar,.serch_form,.main-footer {
+            display:none;
+        }
+    }
